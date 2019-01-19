@@ -8,8 +8,10 @@
     1. servlet
         * servlet 설명
         * spring boot servlet
-    2. front controller pattern 설명
-    3. command pattern 적용
--  spring mvc 에서는
-    * dispatcher servlet
-    * request mapping 
+    2. [front controller pattern](frontControllerPattern.md)
+    3. [command pattern](commandPattern.md) 
+-  spring mvc 
+    * DispatcherServlet
+    * request mapping
+ 
+http://wonwoo.ml/index.php/post/1582
