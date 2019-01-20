@@ -11,7 +11,9 @@
     2. [front controller pattern](frontControllerPattern.md)
     3. [command pattern](commandPattern.md) 
 -  spring mvc 
-    * DispatcherServlet
-    * request mapping
+    * [DispatcherServlet](springmvc.md)
+    
+    
+ 
  
 http://wonwoo.ml/index.php/post/1582
