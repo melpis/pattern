@@ -16,13 +16,12 @@ public class OrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setAttribute("info","list");
-        req.getRequestDispatcher("/WEB-INF/order.jsp").forward(req, resp);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("info","odder");
-        req.getRequestDispatcher("/WEB-INF/order.jsp").forward(req, resp);
     }
 
 

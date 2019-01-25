@@ -24,6 +24,9 @@ public class DispatcherServlet extends HttpServlet {
         } else if("special/order".equalsIgnoreCase(url)) {
             httpServlet = new SpecialOrderServlet();
         }
-        if(httpServlet != null) httpServlet.service(req,resp);
+        if(httpServlet != null){
+            httpServlet.service(req,resp);
+            req.getRequestDispatcher("/WEB-INF/"+url+".jsp").forward(req, resp);
+        }
     }
 }
