@@ -1,5 +1,7 @@
 package servlet;
 
+import command.Command;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,15 +19,16 @@ public class DispatcherServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String requestURL = req.getRequestURI();
+        String method = req.getMethod().toLowerCase();
         String url = requestURL.substring(1);
-        HttpServlet httpServlet = null;
+        Command command = null;
         try {
-            httpServlet = handlerMapping(url);
+            command = handlerMapping(method, url);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(httpServlet != null){
-            httpServlet.service(req,resp);
+        if(command != null){
+            command.service(req,resp);
             viewResolver(req, resp, url);
         }
     }
@@ -34,18 +37,21 @@ public class DispatcherServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/"+url+".jsp").forward(req, resp);
     }
 
-    private HttpServlet handlerMapping(String url) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    private Command handlerMapping(String method, String url) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         String[] urlToken = url.split("\\/");
         if(url.contains("/")){
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder urlBuilder = new StringBuilder();
             for(String className:urlToken){
-                stringBuilder.append(className.substring(0, 1).toUpperCase()).append(className.substring(1));
+                urlBuilder.append(firstCharesterUpper(className));
             }
-            url = stringBuilder.toString();
-        }else{
-            url = url.substring(0,1).toUpperCase()+url.substring(1);
+            url = urlBuilder.toString();
+        } else {
+            url = firstCharesterUpper(url);
         }
+        return (Command)Class.forName("command."+firstCharesterUpper(method)+url+"Command").newInstance();
+    }
 
-        return (HttpServlet)Class.forName("servlet."+url+"Servlet").newInstance();
+    private String firstCharesterUpper(String url) {
+        return url.substring(0, 1).toUpperCase() + url.substring(1);
     }
 }
