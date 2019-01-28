@@ -6,8 +6,6 @@
 --
 - 예제
     1. servlet
-        * servlet 설명
-        * spring boot servlet
     2. [front controller pattern](frontControllerPattern.md)
     3. [command pattern](commandPattern.md) 
 -  spring mvc 

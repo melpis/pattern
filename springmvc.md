@@ -18,31 +18,31 @@ DispatcherServlet
 
 
 DispatcherServlet 
-> doService > doDispatch
 
-processedRequest = checkMultipart(request);
-				multipartRequestParsed = (processedRequest != request);
+    doDispatch
+    processedRequest = checkMultipart(request);
+    multipartRequestParsed = (processedRequest != request);
 
-				// Determine handler for the current request.
-				// url과 맵핑 되는 메소드 찾기
-				HandlerExecutionChain mappedHandler = getHandler(processedRequest);
-				
-				if (mappedHandler == null) {
-					noHandlerFound(processedRequest, response);
-					return;
-				}
+    // Determine handler for the current request.
+    // url과 맵핑 되는 메소드 찾기
+    HandlerExecutionChain mappedHandler = getHandler(processedRequest);
+    
+    if (mappedHandler == null) {
+        noHandlerFound(processedRequest, response);
+        return;
+    }
 
-				// Determine handler adapter for the current request.
-				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
-                if (!mappedHandler.applyPreHandle(processedRequest, response)) {
-                            return;
-                }
-			
-				// Actually invoke the handler.
-				// 실제 실행 코드
-				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+    // Determine handler adapter for the current request.
+    HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+    if (!mappedHandler.applyPreHandle(processedRequest, response)) {
+                return;
+    }
 
-				applyDefaultViewName(processedRequest, mv);
-				mappedHandler.applyPostHandle(processedRequest, response, mv);
-				
-				processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
+    // Actually invoke the handler.
+    // 실제 실행 코드
+    mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+
+    applyDefaultViewName(processedRequest, mv);
+    mappedHandler.applyPostHandle(processedRequest, response, mv);
+    
+    processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
